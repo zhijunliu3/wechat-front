@@ -6,7 +6,7 @@ export const constantRouterMap = [
   {
     path: '/',
     component: () => import('@/views/layouts/index'),
-    redirect: '/common',
+    redirect: '/home',
     meta: {
       title: '首页',
       keepAlive: false
@@ -23,6 +23,18 @@ export const constantRouterMap = [
         name: 'Home',
         component: () => import('@/views/home/index'),
         meta: { title: '首页', keepAlive: false }
+      },
+      {
+        path: '/chooseCity',
+        name: 'ChooseCity',
+        component: () => import('@/views/home/chooseCity'),
+        meta: { title: '城市选择', keepAlive: false }
+      },
+      {
+        path: '/schedule',
+        name: 'Schedule',
+        component: () => import('@/views/home/schedule'),
+        meta: { title: '班次', keepAlive: false }
       },
       {
         path: '/about',

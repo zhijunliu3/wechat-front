@@ -1,26 +1,17 @@
 <!-- home -->
 <template>
   <div class="about-container">
-    <div class="warpper">
-      <div class="list">
-        <div class="logo"></div>
-        <div class="demo-home__title">VUE H5开发模板</div>
-        <div class="item">
-          项目地址:
-          <a href="https://github.com/sunniejs/vue-h5-template">https://github.com/sunniejs/vue-h5-template</a>
-        </div>
-        <div class="item">项目作者: sunnie</div>
-        <div class="item"></div>
-        <div class="wechat">
-          <img :src="this.wechat" alt="" />
-        </div>
-        <div class="item">关注公众号：回复“加群”即可加 前端仙女群</div>
-        <div class="item">
-          {{ userName }}
-          <van-button v-if="userName == ''" type="warning" size="small" @click="doDispatch">快点我~</van-button>
-        </div>
-      </div>
+    <div class="head">
+      <div class="face-bg"></div>
     </div>
+
+    <ul class="row">
+      <li><i class="iconfont icon-user cell-icon primary"></i>我的资料</li>
+      <li><i class="iconfont icon-register cell-icon primary"></i>注册司机</li>
+    </ul>
+    <ul class="row">
+      <li class="danger"><i class="iconfont icon-logout cell-icon"></i>退出登陆</li>
+    </ul>
   </div>
 </template>
 
@@ -62,51 +53,58 @@ export default {
 <style lang="scss">
 .about-container {
   /* 你的命名空间 */
-  background: #fff;
-  height: 100vh;
   box-sizing: border-box;
-  .warpper {
-    padding: 50px 12px 12px 12px;
-    .list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: #666;
-      font-size: 14px;
-      .demo-home__title {
-        margin: 0 0 6px;
-        font-size: 32px;
-        .demo-home__title img,
-        .demo-home__title span {
-          display: inline-block;
-          vertical-align: middle;
-        }
-      }
-      .item {
-        font-size: 14px;
-        line-height: 34px;
-        a {
-          text-decoration: underline;
-        }
-        .van-button {
-          /* vant-ui 元素*/
-          background: #ff5500;
-        }
-      }
+  .head {
+    height: 200px;
+    background: url(../../assets/img/cover.jpg) center no-repeat;
+    background-size: cover;
+    margin-bottom: 0;
+    display: flex;
+    align-items:center;
+    justify-content:center;
+    .face-bg{
+      height: 120px;
+      width: 120px;
+      background-color: #fff;
+      border-radius: 50%;
+      background: url(../../assets/img/face.jpg) no-repeat center;
+      background-size: cover;
+    }
+  }
+  .row {
+    margin-bottom: 10px;
+  }
 
-      .logo {
-        width: 120px;
-        height: 120px;
-        background: url($cdn+'/weapp/logo.png') center / contain no-repeat;
+  ul{
+    display: block;
+    list-style: none;
+    font-size: 16px;
+    li{
+      background-color: #fff;
+      padding: 12px 15px;
+      position: relative;
+      .cell-icon{
+        font-size: 16px;
+        margin-right: 5px;
       }
-      .wechat {
-        width: 200px;
-        height: 200px;
-        img {
-          width: 100%;
-          height: auto;
-        }
-      }
+    }
+    li:last-child:after {
+      height: 0;
+    }
+    li:after {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 15px;
+      height: 1px;
+      content: '';
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #c8c7cc;
+    }
+    li:after {
+      right: 10px;
+      background-color: rgba(0,0,0,.15);
     }
   }
 }

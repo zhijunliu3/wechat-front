@@ -1,74 +1,141 @@
 <!-- home -->
 <template>
   <div class="index-container">
-    <div class="warpper">
-      <h1 class="demo-home__title"><img src="https://www.sunniejs.cn/static/weapp/logo.png" /><span> VUE H5开发模板</span></h1>
-      <h2 class="demo-home__desc">
-        A vue h5 template with Vant UI
-      </h2>
+    <div class="home">
+      <div class="title">拼猪猪代驾返程</div>
+      <div class="content">
+        <van-row class="address">
+          <van-col span="11" class="left" @click="chooseCity">
+            <p>出发站</p>
+            <span>南沙</span>
+          </van-col>
+          <van-col span="2" class="middle"><i class="iconfont icon-exchange"></i></van-col>
+          <van-col span="11" class="right">
+            <p>到达站</p>
+            <span>市桥</span>
+          </van-col>
+        </van-row>
+        <div class="date" @click="clickDate">
+          <p>出行日期</p>
+          <span class="date-format">{{date | formatDate('MM月dd日')}}</span>
+          <span class="explain">{{compareDate(date)}}</span>
+        </div>
+        <van-button type="info" class="search" @click="search">查询</van-button>
+        <van-calendar v-model="show" :show-confirm="false" @confirm="onConfirm" color="#1989fa" />
+      </div>
     </div>
-    <van-cell icon="success" v-for="item in list" :key="item" :title="item" />
   </div>
 </template>
 
 <script>
+import { parseTime } from '@/utils'
 export default {
   data() {
     return {
-      list: [
-        'Vue-cli4',
-        '配置多环境变量',
-        'VantUI 组件按需加载',
-        'Sass 全局样式',
-        'Webpack 4',
-        'Vuex 状态管理',
-        'Axios 封装及接口管理',
-        'Vue-router',
-        'Webpack 4 vue.config.js 基础配置',
-        '配置 proxy 跨域',
-        '配置 alias 别名',
-        '配置 打包分析',
-        '配置 externals 引入 cdn 资源',
-        '去掉 console.log',
-        'splitChunks 单独打包第三方模块',
-        '添加 IE 兼容',
-        'Eslint+Pettier 统一开发规范'
-      ]
+      show: false,
+      date: new Date()
     }
   },
 
   computed: {},
 
-  mounted() { },
+  mounted() {
 
-  methods: {}
+  },
+
+  methods: {
+    clickDate() {
+      this.show = true
+    },
+    onConfirm(date) {
+      this.show = false
+      this.date = date
+    },
+    compareDate(date) {
+      const choose = parseTime(date, '{y}-{m}-{d}')
+      const today = parseTime(new Date(), '{y}-{m}-{d}')
+      if (choose === today) {
+        return '今天'
+      } else {
+        return '周' + parseTime(date, '{a}')
+      }
+    },
+    chooseCity() {
+      this.$router.push('/chooseCity')
+    },
+    search() {
+      this.$router.push('/schedule')
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
 .index-container {
-  .warpper {
-    padding: 12px;
-    background: #fff;
-    .demo-home__title {
-      margin: 0 0 6px;
-      font-size: 32px;
-      .demo-home__title img,
-      .demo-home__title span {
-        display: inline-block;
-        vertical-align: middle;
-      }
-      img {
-        width: 32px;
-      }
-      span {
-        margin-left: 16px;
-        font-weight: 500;
-      }
+  box-sizing: border-box;
+  .home{
+    position: relative;
+    height: 200px;
+    background: url(../../assets/img/home.jpg) center no-repeat;
+    background-size: cover;
+    margin-bottom: 0;
+    .title{
+      width: 90%;
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      color: #fff;
+      font-size: 24px;
     }
-    .demo-home__desc {
-      margin: 0 0 20px;
-      color: rgba(69, 90, 100, 0.6);
-      font-size: 14px;
+    .content{
+      top: 150px;
+      left: 15px;
+      position: absolute;
+      background-color: #fff;
+      width: calc(100% - 52px);
+      border-radius: 5px;
+      padding: 25px 10px;
+      p{
+        margin: 0 0 5px 0;
+        color: #aaaaab;
+      }
+      .address{
+        padding: 0 0 15px 0;
+        border-bottom: 1px solid #dddddf;
+
+        span{
+          font-size: 24px;
+        }
+        .left{
+          text-align: left;
+
+        }
+        .right{
+          text-align: right;
+        }
+        .middle{
+          text-align: center;
+          height: 52px;
+          line-height: 52px;
+          i{
+            font-size: 30px;
+          }
+        }
+      }
+      .date{
+        padding: 12px 0;
+        .date-format{
+          font-size: 24px;
+          margin-right: 10px;
+        }
+        .explain{
+          font-size: 16px;
+        }
+      }
+      .search{
+        width: 100%;
+        margin-top: 10px;
+      }
+
     }
   }
 }

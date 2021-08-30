@@ -8,6 +8,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+import '@/permission'
+
+import '@/components' // register globally
+
 // 设置 js中可以访问 $cdn
 import { $cdn } from '@/config'
 Vue.prototype.$cdn = $cdn
@@ -18,6 +22,8 @@ import '@/plugins/vant'
 import '@/assets/css/index.scss'
 // 移动端适配
 import 'lib-flexible/flexible.js'
+// wx-js-sdk
+import '@/utils/wx'
 
 // filters
 import './filters'

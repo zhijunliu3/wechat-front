@@ -2,13 +2,18 @@ import axios from 'axios'
 import store from '@/store'
 import { Toast } from 'vant'
 // 根据环境不同引入不同api地址
-import { baseApi } from '@/config'
+import { baseUrl } from '@/config'
+import { getToken } from '@/utils/auth'
+import router from '@/router'
 // create an axios instance
 const service = axios.create({
-  baseURL: baseApi, // url = base api url + request url
+  baseURL: baseUrl, // url = base api url + request url
   withCredentials: true, // send cookies when cross-domain requests
   timeout: 5000 // request timeout
 })
+
+// 不拦截响应结果的
+const whiteList = ['/sc/wechatLogin']
 
 // request拦截器 request interceptor
 service.interceptors.request.use(
@@ -21,7 +26,7 @@ service.interceptors.request.use(
       })
     }
     if (store.getters.token) {
-      config.headers['X-Token'] = ''
+      config.headers['token'] = getToken()
     }
     return config
   },
@@ -36,14 +41,18 @@ service.interceptors.response.use(
   response => {
     Toast.clear()
     const res = response.data
-    if (res.status && res.status !== 200) {
-      // 登录超时,重新登录
-      if (res.status === 401) {
-        store.dispatch('FedLogOut').then(() => {
-          location.reload()
-        })
+    const config = response.config
+    if (whiteList.indexOf(config.url) === -1) {
+      if (res.errorCode !== '0') {
+        Toast(res.errorMsg || 'Error')
+        // 登录超时,重新登录
+        if (res.errorCode === 'WEB_2002') {
+          router.push('/common')
+        }
+        return Promise.reject(res || 'error')
+      } else {
+        return Promise.resolve(res)
       }
-      return Promise.reject(res || 'error')
     } else {
       return Promise.resolve(res)
     }

@@ -7,38 +7,29 @@
     @click-left="onClickLeft"
     />
     <van-search v-model="value" placeholder="请输入搜索关键词" />
-    <div class="hot-city">
+    <!-- <div class="hot-city">
       <span class="title">热门城市</span>
       <van-row class="city-tags">
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">南沙</van-tag></van-col>
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">市桥</van-tag></van-col>
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">新塘</van-tag></van-col>
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">增城</van-tag></van-col>
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">天河</van-tag></van-col>
-        <van-col span="6"><van-tag color="#cccccd" text-color="#333" plain type="primary">花都</van-tag></van-col>
+        <van-col span="6" v-for="(hotCity, index) in hotCitys" :key="index" @click="chooseCity(hotCity)">
+          <van-tag color="#cccccd" text-color="#333" plain type="primary">{{hotCity}}</van-tag>
+        </van-col>
       </van-row>
-    </div>
+    </div> -->
     <div class="index-city" :style="{height: height + 'px'}">
       <van-index-bar>
-        <van-index-anchor index="A" />
-        <van-cell title="文本A" />
-        <van-cell title="文本A" />
-        <van-cell title="文本A" />
-
-        <van-index-anchor index="B" />
-        <van-cell title="文本B" />
-        <van-cell title="文本B" />
-        <van-cell title="文本B" />
-
-        <van-index-anchor index="C" />
-        <van-cell title="文本C" />
-        <van-cell title="文本C" />
-        <van-cell title="文本C" />
-
-        <van-index-anchor index="D" />
-        <van-cell title="文本D" />
-        <van-cell title="文本D" />
-        <van-cell title="文本D" />
+        <template v-for="(collection, index) in collections">
+          <van-index-anchor :index="collection.index" :key="collection.index+index" />
+          <van-cell
+            v-for="(city, cityIndex) in collection.data"
+            :title="city.siteName"
+            :key="city.siteName+cityIndex"
+            @click="chooseCity(city.siteName)"
+          >
+          <template #default>
+            <van-button @click.stop="clickLocaltion(city)" class="localtion-button" round plain type="info" size="mini" icon="location-o"></van-button>
+          </template>
+          </van-cell>
+        </template>
       </van-index-bar>
     </div>
   </div>
@@ -46,20 +37,69 @@
 </template>
 
 <script>
+import { listSite } from '@/api/home'
 export default {
   name: 'ChooseCity',
   data() {
     return {
       value: '',
-      height: '100'
+      height: '100',
+      hotCitys: ['南沙', '市桥', '新塘', '增城', '天河', '花都'],
+      collections: [
+        { index: 'A', citys: ['城市A1', '城市A2', '城市A3'] },
+        { index: 'B', citys: ['城市B1', '城市B2', '城市B3'] },
+        { index: 'C', citys: ['城市C1', '城市C2', '城市C3'] },
+        { index: 'D', citys: ['城市D1', '城市D2', '城市D3'] }
+      ],
+      flag: ''
     }
   },
   created() {
-    this.height = window.screen.height - 315
+    this.flag = this.$route.query.flag
+    this.height = window.screen.height - 265 + 102
+    this.listSite()
+  },
+  mounted() {
+    this.$wxConfig.init()
   },
   methods: {
+    listSite() {
+      listSite({}).then(res => {
+        this.collections = this.converArrayAndSort(this.groupByProp(res.data, 'siteInitial'))
+      })
+    },
+    groupByProp(arr, prop) {
+      const result = {}
+      arr.forEach(element => {
+        if (!result[element[prop]]) {
+          result[element[prop]] = [element]
+        } else {
+          result[element[prop]].push(element)
+        }
+      })
+      return result
+    },
+    converArrayAndSort(map) {
+      const result = []
+      Object.keys(map).forEach(key => {
+        result.push({
+          index: key,
+          data: map[key]
+        })
+      })
+      result.sort((o1, o2) => o1.index.localeCompare(o2.index))
+      return result
+    },
     onClickLeft() {
       this.$router.push('/home')
+    },
+    chooseCity(city) {
+      this.$store.dispatch(`user/${this.flag}Site`, city)
+      this.$router.push({ path: '/home' })
+    },
+    clickLocaltion(city) {
+      console.log(city)
+      this.$wxConfig.openLocation(city.latitude, city.longitude, city.siteName, '')
     }
 
   }
@@ -71,6 +111,9 @@ export default {
   .choose-city{
     .van-tag{
       padding: 8px 20px;
+    }
+    .van-button--mini{
+      padding: 5px;
     }
   }
 </style>
@@ -95,6 +138,9 @@ export default {
     }
     .index-city{
       overflow: auto;
+      .localtion-button{
+        margin-right: 10px;
+      }
     }
   }
 </style>

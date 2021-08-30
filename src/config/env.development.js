@@ -1,9 +1,9 @@
 // 本地环境配置
 module.exports = {
-  title: 'vue-h5-template',
-  baseUrl: 'http://localhost:9018', // 项目地址
-  baseApi: 'https://test.xxx.com/api', // 本地api请求地址,注意：如果你使用了代理，请设置成'/'
-  APPID: 'xxx',
-  APPSECRET: 'xxx',
-  $cdn: 'https://www.sunniejs.cn/static'
+  title: '拼拼猪客户端',
+  baseUrl: 'http://liuzj.vaiwan.com/ppz', // 项目地址
+  // baseUrl: 'http://localhost:8080', // 项目地址
+  APPID: 'wxd4270c7f24a6f345',
+  APPSECRET: '83269d80153ce65c47b5453b39da68d9',
+  oauth2Url: 'http://liuzj.vaiwan.com/ppz/wechat/portal/oauth2'
 }

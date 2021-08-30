@@ -5,7 +5,15 @@ import request from '@/utils/request'
 // 登录
 export function login(data) {
   return request({
-    url: api.Login,
+    url: '/sc/wechatLogin',
+    method: 'post',
+    data
+  })
+}
+
+export function bind(data) {
+  return request({
+    url: '/sc/wechatUserLogin',
     method: 'post',
     data
   })
@@ -28,5 +36,43 @@ export function getUserName(params) {
     method: 'get',
     params,
     hideloading: true
+  })
+}
+
+export function register(data) {
+  return request({
+    url: '/sc/register',
+    method: 'post',
+    data
+  })
+}
+
+export function listUserAuthUrl() {
+  return request({
+    url: '/sc/listUserAuthUrl',
+    method: 'get'
+  })
+}
+
+export function logout() {
+  return request({
+    url: '/sc/logout',
+    method: 'get'
+  })
+}
+
+export function sendVerificationCode(mobile) {
+  return request({
+    url: '/sc/sendVerificationCode',
+    method: 'post',
+    data: {},
+    params: { mobile }
+  })
+}
+
+export function unBind() {
+  return request({
+    url: '/sc/wechatLogout',
+    method: 'get'
   })
 }

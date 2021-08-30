@@ -1,4 +1,4 @@
-# vue-h5-template
+# ppz-front
 
 基于 vue-cli4.0 + webpack 4 + vant ui + sass+ rem 适配方案+axios 封装，构建手机端模板脚手架
 
@@ -1128,21 +1128,3 @@ Vscode setting.json 设置
 
 [vue-cli4-config](https://github.com/staven630/vue-cli4-config)  
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
-
-# 关于我
-
-获取更多技术相关文章，关注公众号”前端女塾“。
-
-回复加群，即可加入”前端仙女群“
-
- <p>
-  <img src="./static/gognzhonghao.jpg" width="256" style="display:inline;">
-</p>
-
-扫描添加下方的微信并备注 Sol 加交流群，交流学习，及时获取代码最新动态。
-
-<p>
-  <img src="./static/me.png" width="256" style="display:inline;">
-</p>
- 
-如果对你有帮助送我一颗小星星（づ￣3￣）づ╭❤～

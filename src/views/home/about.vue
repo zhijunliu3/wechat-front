@@ -4,48 +4,60 @@
     <div class="head">
       <div class="face-bg"></div>
     </div>
-
     <ul class="row">
-      <li><i class="iconfont icon-user cell-icon primary"></i>我的资料</li>
-      <li><i class="iconfont icon-register cell-icon primary"></i>注册司机</li>
+      <!-- <li><i class="iconfont icon-user cell-icon primary"></i>我的资料</li>
+      <li><i class="iconfont icon-register cell-icon primary"></i>注册司机</li> -->
+      <li v-if="userType === '2'" @click="jumpPage('/mycar')"><i class="iconfont icon-register cell-icon primary"></i>我的汽车</li>
+      <li v-if="userType === '2'" @click="jumpPage('/trip')"><i class="iconfont icon-register cell-icon primary"></i>我的行程</li>
+      <li v-if="userType === '1'" @click="jumpPage('/order')"><i class="iconfont icon-register cell-icon primary"></i>我的订单</li>
     </ul>
     <ul class="row">
-      <li class="danger"><i class="iconfont icon-logout cell-icon"></i>退出登陆</li>
+      <li class="danger" @click="unBind"><i class="iconfont icon-logout cell-icon"></i>解除绑定</li>
+    </ul>
+    <ul class="row">
+      <li class="danger" @click="logout"><i class="iconfont icon-logout cell-icon"></i>退出登陆</li>
     </ul>
   </div>
 </template>
 
 <script>
-// 请求接口
-import { getUserInfo } from '@/api/user.js'
 import { mapGetters } from 'vuex'
+import { unBind } from '@/api/user'
+import { removeToken } from '@/utils/auth'
+import { Dialog } from 'vant'
 export default {
   data() {
     return {
-      wechat: `${this.$cdn}/wx/640.gif`
     }
   },
   computed: {
-    ...mapGetters(['userName'])
+    ...mapGetters([
+      'userType'
+    ])
   },
   mounted() {
-    this.initData()
   },
   methods: {
-    // 请求数据案例
-    initData() {
-      // 请求接口数据，仅作为展示，需要配置src->config下环境文件
-      const params = { user: 'sunnie' }
-      getUserInfo(params)
-        .then(() => { })
-        .catch(() => { })
+    jumpPage(path, query) {
+      this.$router.push({ path, query })
     },
-    // Action 通过 store.dispatch 方法触发
-    doDispatch() {
-      this.$store.dispatch('setUserName', '真乖，赶紧关注公众号，组织都在等你~')
+    logout() {
+      this.$store.dispatch(`user/logout`)
+      this.$router.push('/common')
     },
-    goGithub(index) {
-      window.location.href = 'https://github.com/sunniejs/vue-h5-template'
+    unBind() {
+      Dialog.confirm({
+        message: '解除绑定后，需要再次绑定才可以登陆。'
+      }).then(() => {
+        unBind().then(res => {
+          removeToken()
+          this.$router.push('/bind')
+        }).catch(err => {
+          console.log(err)
+        })
+      }).catch(() => {
+        // on cancel
+      })
     }
   }
 }

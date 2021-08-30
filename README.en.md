@@ -1,4 +1,4 @@
-# vue-h5-template
+# ppz-front
 
 基于vue-cli3.0+webpack 4+vant ui + sass+ rem适配方案+axios封装，构建手机端模板脚手架
 
@@ -30,16 +30,3 @@
 选用rem的原因是因为vant直接给到了这个适配方案，个人也比较喜欢这个方案
 
 [vant](https://youzan.github.io/vant/#/zh-CN/quickstart)  
- 
- #### 总结
-
-因为项目刚刚构建起来，后面还会持续更新，实际使用过程中一定还有很多问题，如果文章中有错误希望能够被指正，一起成长
-
-# 关于我
-
-您可以扫描添加下方的微信并备注 Soul 加交流群，给我提意见，交流学习。
-<p>
-  <img src="https://tweapp.top1buyer.com/mine.jpg" width="256" style="display:inline;">
-</p>
- 
-如果对你有帮助送我一颗小星星（づ￣3￣）づ╭❤～

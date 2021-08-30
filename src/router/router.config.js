@@ -13,35 +13,84 @@ export const constantRouterMap = [
     },
     children: [
       {
-        path: '/common',
-        name: 'Common',
-        component: () => import('@/views/common/index'),
-        meta: { title: '公共页', keepAlive: false }
-      },
-      {
         path: '/home',
         name: 'Home',
         component: () => import('@/views/home/index'),
         meta: { title: '首页', keepAlive: false }
       },
       {
-        path: '/chooseCity',
-        name: 'ChooseCity',
-        component: () => import('@/views/home/chooseCity'),
-        meta: { title: '城市选择', keepAlive: false }
-      },
-      {
-        path: '/schedule',
-        name: 'Schedule',
-        component: () => import('@/views/home/schedule'),
-        meta: { title: '班次', keepAlive: false }
-      },
-      {
         path: '/about',
         name: 'About',
         component: () => import('@/views/home/about'),
-        meta: { title: '关于我', keepAlive: false }
+        meta: { title: '我的', keepAlive: false }
       }
     ]
+  },
+  {
+    path: '/common',
+    name: 'Common',
+    component: () => import('@/views/common/index'),
+    meta: { title: '公共页', keepAlive: false }
+  },
+  {
+    path: '/chooseCity',
+    name: 'ChooseCity',
+    component: () => import('@/views/home/chooseCity'),
+    meta: { title: '城市选择', keepAlive: false }
+  },
+
+  {
+    path: '/schedule',
+    name: 'Schedule',
+    component: () => import('@/views/home/schedule'),
+    meta: { title: '班次' }
+  },
+  {
+    path: '/order',
+    name: 'Order',
+    component: () => import('@/views/order/index'),
+    meta: { title: '订单', keepAlive: false }
+  },
+  {
+    path: '/order-detail',
+    name: 'OrderDetail',
+    component: () => import('@/views/order/detail'),
+    meta: { title: '订单详情', keepAlive: false }
+  },
+  {
+    path: '/preorder',
+    name: 'Preorder',
+    component: () => import('@/views/order/preorder'),
+    meta: { title: '预订单', keepAlive: false }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/user/register'),
+    meta: { title: '用户注册', keepAlive: false }
+  },
+  {
+    path: '/bind',
+    name: 'Bind',
+    component: () => import('@/views/user/bind'),
+    meta: { title: '用户绑定', keepAlive: false }
+  },
+  {
+    path: '/mycar',
+    name: 'MyCar',
+    component: () => import('@/views/car/index'),
+    meta: { title: '我的汽车', keepAlive: false }
+  },
+  {
+    path: '/trip',
+    name: 'Trip',
+    component: () => import('@/views/car/trip'),
+    meta: { title: '我的行程', keepAlive: false }
+  },
+  {
+    path: '/trip-detail',
+    name: 'TripDetail',
+    component: () => import('@/views/car/detail'),
+    meta: { title: '行程详情', keepAlive: false }
   }
 ]

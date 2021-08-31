@@ -7,12 +7,12 @@
     <ul class="row">
       <!-- <li><i class="iconfont icon-user cell-icon primary"></i>我的资料</li>
       <li><i class="iconfont icon-register cell-icon primary"></i>注册司机</li> -->
-      <li v-if="userType === '2'" @click="jumpPage('/mycar')"><i class="iconfont icon-register cell-icon primary"></i>我的汽车</li>
-      <li v-if="userType === '2'" @click="jumpPage('/trip')"><i class="iconfont icon-register cell-icon primary"></i>我的行程</li>
-      <li v-if="userType === '1'" @click="jumpPage('/order')"><i class="iconfont icon-register cell-icon primary"></i>我的订单</li>
+      <li v-if="userType === '2'" @click="jumpPage('/mycar')"><i class="iconfont icon-car cell-icon primary"></i>我的汽车</li>
+      <li v-if="userType === '2'" @click="jumpPage('/trip')"><i class="iconfont icon-trip cell-icon primary"></i>我的行程</li>
+      <li v-if="userType === '1'" @click="jumpPage('/order')"><i class="iconfont icon-order cell-icon primary"></i>我的订单</li>
     </ul>
     <ul class="row">
-      <li class="danger" @click="unBind"><i class="iconfont icon-logout cell-icon"></i>解除绑定</li>
+      <li class="danger" @click="unBind"><i class="iconfont icon-unbind cell-icon"></i>解除绑定</li>
     </ul>
     <ul class="row">
       <li class="danger" @click="logout"><i class="iconfont icon-logout cell-icon"></i>退出登陆</li>

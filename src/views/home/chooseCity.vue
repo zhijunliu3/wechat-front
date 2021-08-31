@@ -56,6 +56,7 @@ export default {
   },
   created() {
     this.flag = this.$route.query.flag
+    console.log(this.flag)
     this.height = window.screen.height - 265 + 102
     this.listSite()
   },
@@ -64,7 +65,7 @@ export default {
   },
   methods: {
     listSite() {
-      listSite({}).then(res => {
+      listSite({ startSiteName: this.flag === 'start' }).then(res => {
         this.collections = this.converArrayAndSort(this.groupByProp(res.data, 'siteInitial'))
       })
     },

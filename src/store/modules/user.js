@@ -9,8 +9,8 @@ const getDefaultState = () => {
     avatar: '',
     roles: [],
     permissions: [],
-    startSite: localStorage.getItem('startSite') || '南沙',
-    endSite: localStorage.getItem('endSite') || '市桥',
+    startSite: localStorage.getItem('startSite') || '南沙奥园',
+    endSite: localStorage.getItem('endSite') || '番禺市桥',
     date: new Date(),
     userType: localStorage.getItem('userType') || '1'
   }

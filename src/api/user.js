@@ -61,12 +61,12 @@ export function logout() {
   })
 }
 
-export function sendVerificationCode(mobile) {
+export function sendVerificationCode(mobile, userType) {
   return request({
     url: '/sc/sendVerificationCode',
     method: 'post',
     data: {},
-    params: { mobile }
+    params: { mobile, userType }
   })
 }
 

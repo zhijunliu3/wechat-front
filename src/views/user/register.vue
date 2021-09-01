@@ -80,7 +80,7 @@ export default {
       this.$refs.form.validate('mobile').then(() => {
         this.countDown(120)
         console.log(this.mobile)
-        sendVerificationCode(this.mobile).then(res => {
+        sendVerificationCode(this.mobile, this.$route.query.userType).then(res => {
           Toast.success('发送成功')
         }).catch(err => {
           console.log(err)

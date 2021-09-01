@@ -51,7 +51,7 @@ export default {
       }).then(() => {
         unBind().then(res => {
           removeToken()
-          this.$router.push('/bind')
+          this.$router.push('/common')
         }).catch(err => {
           console.log(err)
         })

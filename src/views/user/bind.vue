@@ -97,7 +97,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.register{
+.bind{
   background-color: #fff;
   .verification-button{
     margin-top: 5px;

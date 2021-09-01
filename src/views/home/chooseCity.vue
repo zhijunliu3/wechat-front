@@ -6,7 +6,7 @@
     left-arrow
     @click-left="onClickLeft"
     />
-    <van-search v-model="value" placeholder="请输入搜索关键词" />
+    <!-- <van-search v-model="value" placeholder="请输入搜索关键词" /> -->
     <!-- <div class="hot-city">
       <span class="title">热门城市</span>
       <van-row class="city-tags">
@@ -38,6 +38,7 @@
 
 <script>
 import { listSite } from '@/api/home'
+import { mapGetters } from 'vuex'
 export default {
   name: 'ChooseCity',
   data() {
@@ -54,10 +55,16 @@ export default {
       flag: ''
     }
   },
+  computed: {
+    ...mapGetters([
+      'startSite',
+      'endSite'
+    ])
+  },
   created() {
     this.flag = this.$route.query.flag
     console.log(this.flag)
-    this.height = window.screen.height - 265 + 102
+    this.height = window.screen.height - 265 + 102 + 54
     this.listSite()
   },
   mounted() {
@@ -65,7 +72,14 @@ export default {
   },
   methods: {
     listSite() {
-      listSite({ startSiteName: this.flag === 'start' }).then(res => {
+      let request = {}
+      if (this.flag === 'end') {
+        request = {
+          siteName: this.startSite,
+          startSiteName: true
+        }
+      }
+      listSite(request).then(res => {
         this.collections = this.converArrayAndSort(this.groupByProp(res.data, 'siteInitial'))
       })
     },

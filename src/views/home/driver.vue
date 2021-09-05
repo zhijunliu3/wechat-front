@@ -10,6 +10,7 @@
 <script>
 import { onCarOrder } from '@/api/order'
 import { Toast } from 'vant'
+import { init, scanQRCode, isIOS } from '@/utils/wx'
 export default {
   name: 'Driver',
   data() {
@@ -21,11 +22,13 @@ export default {
     this.height = window.screen.height - 100
   },
   mounted() {
-    this.$wxConfig.init()
+    if (!isIOS()) {
+      init()
+    }
   },
   methods: {
     scanQRCode() {
-      this.$wxConfig.scanQRCode(res => {
+      scanQRCode(res => {
         if (res.errMsg === 'scanQRCode:ok') {
           const { orderId, timeTableId } = JSON.parse(res.resultStr)
           this.onCarOrder(orderId, timeTableId)

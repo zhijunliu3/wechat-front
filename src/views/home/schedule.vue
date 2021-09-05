@@ -42,10 +42,13 @@
               <p class="bottom">{{item.licensePlate}}</p>
             </van-col>
             <van-col span="6" class="address">
-              <van-badge :content="'+' + getDaysBetween(item.endTime)" color="#1989fa">
+                <p class="time relative-position">{{getSiteTime(item.endTime)}}
+                  <van-badge v-if="getDaysBetween(item.endTime)" class="badge" :content="'+' + getDaysBetween(item.endTime)"  color="#1989fa" />
+                </p>
+              <!-- <van-badge :content="'+' + getDaysBetween(item.endTime)" color="#1989fa">
                 <p class="time">{{getSiteTime(item.endTime)}}</p>
               </van-badge>
-              <br>
+              <br> -->
               <span>{{item.endSiteName}}</span>
             </van-col>
             <van-col span="3" class="price">
@@ -159,13 +162,13 @@ export default {
       return parseTime(new Date(), '{y}{m}{d}') === parseTime(this.date, '{y}{m}{d}')
     },
     getDaysBetween(date) {
-      var startDate = new Date(parseTime(this.date, '{y}-{m}-{d}'))
-      var endDate = new Date(parseTime(date, '{y}-{m}-{d}'))
+      var startDate = new Date(parseTime(this.date, '{y}/{m}/{d}'))
+      var endDate = new Date(parseTime(date, '{y}/{m}/{d}'))
       var days = (endDate - startDate) / (24 * 60 * 60 * 1000)
       return days
     },
     getSiteTime(date) {
-      return parseTime(new Date(date), '{h}:{i}')
+      return parseTime(date, '{h}:{i}')
     },
     order(item) {
       this.$router.push({ path: '/preorder', query: item })
@@ -215,6 +218,14 @@ export default {
             font-weight: 600;
             line-height: 30px;
             height: 30px;
+            .badge{
+              position: absolute;
+              top: -5px;
+              right: 2px;
+            }
+          }
+          .relative-position{
+            position: relative;
           }
         }
         .car-info{

@@ -61,6 +61,7 @@
 import { cancelOrder, payOrder, orderDetail, wechatPay } from '@/api/order'
 import { parseTime } from '@/utils'
 import { Toast } from 'vant'
+import { init, chooseWXPay, isIOS } from '@/utils/wx'
 export default {
   name: 'OrderDetail',
   data() {
@@ -77,7 +78,9 @@ export default {
     }
   },
   mounted() {
-    this.$wxConfig.init()
+    if (!isIOS()) {
+      init()
+    }
   },
   methods: {
     onClickLeft() {
@@ -91,7 +94,7 @@ export default {
     },
     payOrder() {
       wechatPay(this.detail.orderId).then(res => {
-        this.$wxConfig.chooseWXPay(res.data, () => {
+        chooseWXPay(res.data, () => {
           payOrder({ orderId: this.detail.orderId }).then(res => {
             Toast.success('支付成功')
             this.orderDetail(this.orderId)
@@ -107,7 +110,7 @@ export default {
       })
     },
     getSiteTime(date) {
-      return parseTime(new Date(date), '{h}:{i}')
+      return parseTime(date, '{h}:{i}')
     }
   }
 }

@@ -6,7 +6,12 @@ export function formatDate(time, fmt) {
   if (time === undefined || '') {
     return
   }
-  const date = new Date(time)
+  let date
+  if (typeof time === 'string') {
+    date = new Date(time.replace(/-/g, '/'))
+  } else {
+    date = new Date(time)
+  }
   if (/(y+)/.test(fmt)) {
     fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
   }

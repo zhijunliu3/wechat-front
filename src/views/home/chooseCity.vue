@@ -39,6 +39,7 @@
 <script>
 import { listSite } from '@/api/home'
 import { mapGetters } from 'vuex'
+import { init, openLocation, isIOS } from '@/utils/wx'
 export default {
   name: 'ChooseCity',
   data() {
@@ -68,7 +69,9 @@ export default {
     this.listSite()
   },
   mounted() {
-    this.$wxConfig.init()
+    if (!isIOS()) {
+      init()
+    }
   },
   methods: {
     listSite() {
@@ -114,7 +117,7 @@ export default {
     },
     clickLocaltion(city) {
       console.log(city)
-      this.$wxConfig.openLocation(city.latitude, city.longitude, city.siteName, '')
+      openLocation(city.latitude, city.longitude, city.siteName, '')
     }
 
   }
@@ -128,7 +131,8 @@ export default {
       padding: 8px 20px;
     }
     .van-button--mini{
-      padding: 5px;
+      padding: 5px 8px;
+      height: 30px;
     }
   }
 </style>

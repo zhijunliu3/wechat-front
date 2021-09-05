@@ -23,7 +23,7 @@ import '@/assets/css/index.scss'
 // 移动端适配
 import 'lib-flexible/flexible.js'
 // wx-js-sdk
-import '@/utils/wx'
+// import '@/utils/wx'
 
 // filters
 import './filters'

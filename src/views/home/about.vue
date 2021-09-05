@@ -14,9 +14,9 @@
     <ul class="row">
       <li class="danger" @click="unBind"><i class="iconfont icon-unbind cell-icon"></i>解除绑定</li>
     </ul>
-    <ul class="row">
+    <!-- <ul class="row">
       <li class="danger" @click="logout"><i class="iconfont icon-logout cell-icon"></i>退出登陆</li>
-    </ul>
+    </ul> -->
   </div>
 </template>
 

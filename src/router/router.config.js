@@ -67,7 +67,19 @@ export const constantRouterMap = [
     path: '/register',
     name: 'Register',
     component: () => import('@/views/user/register'),
-    meta: { title: '用户注册', keepAlive: false }
+    meta: { title: '用户注册', keepAlive: true }
+  },
+  {
+    path: '/memberProtocol',
+    name: 'MemberProtocol',
+    component: () => import('@/views/user/memberProtocol'),
+    meta: { title: '会员协议', keepAlive: false }
+  },
+  {
+    path: '/privateProtocol',
+    name: 'PrivateProtocol',
+    component: () => import('@/views/user/privateProtocol'),
+    meta: { title: '隐私协议', keepAlive: false }
   },
   {
     path: '/bind',

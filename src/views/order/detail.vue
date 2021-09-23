@@ -29,7 +29,7 @@
           </van-col>
         </van-row>
         <van-row class="seat-info">
-          <!-- <span>乘车时间：2021-06-06 20:45:00</span> -->
+          <span>行李位：{{detail.baggageCount?'有':'无'}}</span>
           <span>座位号：{{detail.seatNo}}</span>
         </van-row>
       </div>
@@ -49,12 +49,28 @@
       </div>
 
       <div class="info" v-if="detail.orderState === '待支付'">
+        <div class="protocol-display">
+          <van-checkbox v-model="checked">同意</van-checkbox><span @click="showProtocol">《本次行程服务协议》</span>
+        </div>
         <van-row class="button">
           <van-col span="12"><van-button  type="default" @click="cancelOrder">取消订单</van-button></van-col>
           <van-col span="12"><van-button  type="info" @click="payOrder">确定支付</van-button></van-col>
         </van-row>
       </div>
     </div>
+    <van-popup
+      v-model="show"
+      closeable
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+    <div class="procotol">
+      <div class="title">行程服务协议</div>
+      <p>感谢您对拼拼猪的支持！</p>
+      <p>感谢您使用拼拼猪代驾返程软件！</p>
+      <p>感谢您使用拼拼猪作为返程的选择！</p>
+    </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -68,7 +84,9 @@ export default {
     return {
       detail: {},
       text: '',
-      isShowQr: false
+      isShowQr: false,
+      checked: false,
+      show: false
     }
   },
   created() {
@@ -93,10 +111,13 @@ export default {
       })
     },
     payOrder() {
+      if (!this.checked) {
+        Toast.fail('请勾选同意行程服务协议')
+        return
+      }
       wechatPay(this.detail.orderId).then(res => {
         chooseWXPay(res.data, () => {
           payOrder({ orderId: this.detail.orderId }).then(res => {
-            Toast.success('支付成功')
             this.orderDetail(this.orderId)
           })
         })
@@ -111,6 +132,9 @@ export default {
     },
     getSiteTime(date) {
       return parseTime(date, '{h}:{i}')
+    },
+    showProtocol() {
+      this.show = true
     }
   }
 }
@@ -199,9 +223,20 @@ export default {
       .button{
         text-align: center;
       }
+      .protocol-display{
+        display: flex;
+        margin-bottom: 10px;
+      }
     }
     .qr-code{
       text-align: center;
+    }
+  }
+  .procotol{
+    padding: 50px 15px 10px;
+    .title{
+      text-align: center;
+      font-size: 16px;
     }
   }
 

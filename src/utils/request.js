@@ -9,7 +9,7 @@ import router from '@/router'
 const service = axios.create({
   baseURL: baseUrl, // url = base api url + request url
   withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 60000 // request timeout
 })
 
 // 不拦截响应结果的

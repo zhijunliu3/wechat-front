@@ -1,7 +1,7 @@
 <template>
   <div class="driver">
     <div class="home">
-      <div class="title">拼猪猪代驾返程</div>
+      <div class="title">拼拼猪代驾返程</div>
     </div>
     <van-button type="info" class="scan-button" @click="scanQRCode">扫描上车</van-button>
   </div>

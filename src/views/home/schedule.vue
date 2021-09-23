@@ -57,7 +57,8 @@
           </van-row>
           <van-row class="seat-info">
             <van-col span="8" class="number">剩余座位：{{item.seatCount}}个</van-col>
-            <van-col span="16" class="order-button">
+            <van-col span="8" class="number">剩余行李位：{{item.baggageCount}}个</van-col>
+            <van-col span="8" class="order-button">
               <van-button color="#1989fa" round type="primary" size="mini" @click="order(item)">预定</van-button>
             </van-col>
           </van-row>

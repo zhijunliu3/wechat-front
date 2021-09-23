@@ -80,3 +80,19 @@ export function wechatPay(orderId) {
     params: { orderId }
   })
 }
+
+export function deleteImage(id) {
+  return request({
+    url: '/bu/image/delete',
+    method: 'post',
+    data: [id]
+  })
+}
+
+export function singleCar(data) {
+  return request({
+    url: '/bu/car/singleCar',
+    method: 'post',
+    data
+  })
+}

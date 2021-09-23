@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <div class="title">拼猪猪代驾返程</div>
+      <div class="title">拼拼猪代驾返程</div>
       <div class="content">
         <van-row class="address">
           <van-col span="11" class="left" @click="chooseCity('start')">
@@ -19,6 +19,7 @@
           <span class="explain">{{compareDate(date)}}</span>
         </div>
         <van-button type="info" class="search" @click="search">查询</van-button>
+        <van-button type="info" class="search" @click="scanQRCode">扫描下单</van-button>
         <van-calendar v-model="show" :show-confirm="false" @confirm="onConfirm" color="#1989fa" />
       </div>
     </div>
@@ -26,6 +27,7 @@
 <script>
 import { parseTime } from '@/utils'
 import { mapGetters } from 'vuex'
+import { init, scanQRCode, isIOS } from '@/utils/wx'
 export default {
   name: 'Passenger',
   data() {
@@ -40,7 +42,24 @@ export default {
       'date'
     ])
   },
+  mounted() {
+    if (!isIOS()) {
+      init()
+    }
+  },
   methods: {
+    scanQRCode() {
+      scanQRCode(res => {
+        if (res.errMsg === 'scanQRCode:ok') {
+          const { startSiteName, endSiteName, timeTableId } = JSON.parse(res.resultStr)
+          this.$router.push({ path: '/preorder', query: {
+            startSiteName: unescape(startSiteName),
+            endSiteName: unescape(endSiteName),
+            timeTableId
+          }})
+        }
+      })
+    },
     clickDate() {
       this.show = true
     },

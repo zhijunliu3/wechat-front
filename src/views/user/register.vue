@@ -35,11 +35,31 @@
           </van-button>
         </van-col>
       </van-row>
+      <van-field name="radio" label="" :rules="[{ required: true, message: '请勾选相关服务条款和隐私政策' }]">
+        <template #input>
+          <van-checkbox v-model="checked">同意</van-checkbox>
+          <a @click="jumpProtocol('member')">《会员协议》</a>
+          <a @click="jumpProtocol('private')">《隐私协议》</a>
+        </template>
+      </van-field>
       <div style="margin: 16px;">
         <van-button round block type="info" native-type="submit">提交</van-button>
       </div>
       <a style="float: right; margin-right: 16px;" @click="bind">已有用户，需要绑定用户请点击</a>
     </van-form>
+    <van-popup
+      v-model="show"
+      closeable
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+    <div class="procotol">
+      <div class="title">{{flag==='member'?'会员':'隐私'}}协议</div>
+      <p>感谢您对拼拼猪的支持！</p>
+      <p>感谢您使用拼拼猪代驾返程软件！</p>
+      <p>感谢您使用拼拼猪作为返程的选择！</p>
+    </div>
+    </van-popup>
   </div>
 </template>
 <script>
@@ -56,7 +76,10 @@ export default {
       codeText: '发送验证码',
       disabledCodeBtn: false,
       openId: '',
-      userType: ''
+      userType: '',
+      checked: '',
+      show: false,
+      flag: 'member'
     }
   },
   created() {
@@ -103,6 +126,11 @@ export default {
     },
     bind() {
       this.$router.push({ path: '/bind', query: this.$route.query })
+    },
+    jumpProtocol(page) {
+      // this.$router.push({ path: '/' + page })
+      this.flag = page
+      this.show = true
     }
   }
 }
@@ -115,5 +143,13 @@ export default {
     margin-top: 5px;
     margin-left: 10px;
   }
+  .procotol{
+    padding: 50px 15px 10px;
+    .title{
+      text-align: center;
+      font-size: 16px;
+    }
+  }
+
 }
 </style>
